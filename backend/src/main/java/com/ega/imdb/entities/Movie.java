@@ -1,6 +1,5 @@
 package com.ega.imdb.entities;
 
-import com.opencsv.bean.CsvBindByName;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -20,34 +19,24 @@ public class Movie {
 
     @Id
     @Column(name = "ID")
-    @CsvBindByName(column = "tconst")
     String id;
 
-    @Column(name = "TITLE")
-    @CsvBindByName(column = "primaryTitle")
+    @Column(name = "TITLE", length = 400)
     String title;
 
     @Column(name = "GENRES")
-    @CsvBindByName(column = "genres")
     String genres;
 
-    @Column(name = "YEAR")
-    @CsvBindByName(column = "startYear")
+    @Column(name = "START_YEAR")
     Integer year;
+
+    @Column(name = "RUNTIME")
+    Integer runtimeMinutes;
 
     @Column(name = "RATING")
     Double rating;
 
-    @Column(name = "RUNTIME")
-    @CsvBindByName(column = "runtimeMinutes")
-    Integer runtimeMinutes;
-
-    @Column(name = "AVG_RATING")
-    @CsvBindByName(column = "averageRating")
-    Double avgRating;
-
     @Column(name = "NUM_VOTES")
-    @CsvBindByName(column = "numVotes")
     Integer numVotes;
 
 }
