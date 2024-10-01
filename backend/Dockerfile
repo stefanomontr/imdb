@@ -25,10 +25,9 @@ RUN ./$SQL_SERVER_STARTUP_SCRIPT && ./mvnw clean install
 FROM openjdk:17-alpine AS final
 
 WORKDIR /backend
+COPY data-source/ .
 COPY --from=builder /backend/target/imdb-*.jar .
 
 EXPOSE 8080
 
 CMD java -jar imdb-*.jar
-
-#CMD ["bash"]
