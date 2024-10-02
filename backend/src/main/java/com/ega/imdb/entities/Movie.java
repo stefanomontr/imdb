@@ -18,10 +18,10 @@ import lombok.NoArgsConstructor;
 public class Movie {
 
     @Id
-    @Column(name = "ID")
+    @Column(name = "ID", length = 12)
     String id;
 
-    @Column(name = "TITLE", length = 400)
+    @Column(name = "TITLE")
     String title;
 
     @Column(name = "GENRES")
