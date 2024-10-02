@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("movies")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "${allowed.cross.origin}")
 public class MovieController {
 
     private final MovieService movieService;

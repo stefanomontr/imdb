@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {useEffect, useState} from 'react'
 import './App.css'
+import Page from "./dtos/Page.ts";
+import Movie from "./dtos/Movie.ts";
+import fetchFromBackendApi from "./utils/fetch-utils.ts";
+import SearchCriteria from "./dtos/SearchCriteria.ts";
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  const [movies, setMovies] = useState({} as Page<Movie>);
+  const [searchCriteria, setSearchCriteria] = useState({
+    title: "Sun",
+    paginationFilter: {
+      offset: 0,
+      limit: 10
+    }
+  } as SearchCriteria);
+
+  useEffect(() => {
+    fetchFromBackendApi<Page<Movie>>("movies/search", {
+      method: "POST",
+      body: JSON.stringify(searchCriteria),
+      headers: new Headers({
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      })
+    }).then(moviePage => setMovies(moviePage));
+  }, []);
+
+  return (<div>
+    {movies.content?.map(movie => <p key={movie.id}>{movie.title}</p>)}
+  </div>);
 }
 
 export default App
