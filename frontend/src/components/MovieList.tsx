@@ -4,12 +4,10 @@ import Movie from "../dtos/Movie.ts";
 import {useContext, useEffect, useState} from "react";
 import SearchContext from "./SearchContext.tsx";
 import fetchFromBackendApi from "../utils/fetch-utils.ts";
-import classes from "./Movies.module.css";
-import border from "../utils/css-utils.ts";
 
 export default function MovieList() {
   const [movies, setMovies] = useState({} as Page<Movie>);
-  const { searchCriteria } = useContext(SearchContext);
+  const {searchCriteria} = useContext(SearchContext);
 
   useEffect(() => {
     fetchFromBackendApi<Page<Movie>>("movies/search", {
@@ -22,7 +20,9 @@ export default function MovieList() {
     }).then(moviePage => setMovies(moviePage));
   }, [searchCriteria]);
 
-  return (<div className={classes.advancedSearch__movies + border()}>
-    {movies.content?.map(movie => <MovieCell key={movie.id} movie={movie}/>)}
-  </div>);
+  return (
+    <div>
+      {movies.content?.map(movie => <MovieCell key={movie.id} movie={movie}/>)}
+    </div>
+  );
 }

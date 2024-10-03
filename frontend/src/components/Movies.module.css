@@ -41,7 +41,7 @@
 }
 
 .advanced-search__filters,
-.advanced-search__movies {
+.advanced-search__results-container {
     display: inline-block;
 }
 
@@ -50,6 +50,27 @@
     vertical-align: top;
 }
 
-.advanced-search__movies {
+.advanced-search__results-container {
     width: 60%;
+}
+
+.advanced-search__result-count,
+.advanced-search__sorting {
+    width: 25%;
+    display: inline-block;
+}
+
+.advanced-search__sorting-dir-icon {
+    width: 24px;
+    display: inline-block;
+    text-align: center;
+}
+
+.advanced-search__sorting-dir-icon svg {
+    display: block;
+}
+
+.advanced-search__filter-chips {
+    margin: 16px 0;
+    padding-left: 40px;
 }

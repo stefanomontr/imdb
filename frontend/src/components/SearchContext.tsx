@@ -1,6 +1,8 @@
 import {createContext, PropsWithChildren, useReducer} from "react";
 import SearchCriteria from "../dtos/SearchCriteria.ts";
 import {SEARCH_ACTION, SearchAction} from "../utils/search-utils.ts";
+import PaginationFilter from "../dtos/PaginationFilter.ts";
+import SortCriterion from "../dtos/SortCriterion.ts";
 
 type SearchContextType = {
   searchCriteria: SearchCriteria,
@@ -10,7 +12,9 @@ type SearchContextType = {
   setGenre: (genre: string | undefined) => void,
   setYear: (year: number | undefined) => void,
   setMaxRating: (maxRating: number | undefined) => void,
-  setMinRating: (minRating: number | undefined) => void
+  setMinRating: (minRating: number | undefined) => void,
+  setPagination: (paginationFilter: PaginationFilter) => void,
+  setSorting: (sorting: SortCriterion | undefined) => void
 }
 
 const SearchContext = createContext({} as SearchContextType);
@@ -20,8 +24,7 @@ export function SearchContextProvider(props: PropsWithChildren<object>) {
   const initSearchCriteria = {
     paginationFilter: {
       offset: 0,
-      limit:
-        10
+      limit: 10
     }
   } as SearchCriteria;
 
@@ -42,13 +45,25 @@ export function SearchContextProvider(props: PropsWithChildren<object>) {
           return ({...state, maxRating: action.payload.value});
         case SEARCH_ACTION.MIN_RATING:
           return ({...state, minRating: action.payload.value});
+        case SEARCH_ACTION.PAGINATION:
+          // TODO
+          return state;
+        case SEARCH_ACTION.SORTING:
+          return ({
+            ...state,
+            paginationFilter: {
+              ...state.paginationFilter,
+              sorting: action.payload.value
+            }
+          });
         default:
           return state;
       }
     }, initSearchCriteria
   );
 
-  const searchAction = (actionType: string, value: string | number | undefined) => {
+  // TODO add equality check here
+  const searchAction = (actionType: string, value: any) => {
     dispatchSearchCriteria({
       "type": actionType,
       payload: {
@@ -71,6 +86,10 @@ export function SearchContextProvider(props: PropsWithChildren<object>) {
     searchAction(SEARCH_ACTION.MAX_RATING, maxRating);
   const setMinRating = (minRating: number | undefined) =>
     searchAction(SEARCH_ACTION.MIN_RATING, minRating);
+  const setSorting = (sorting: SortCriterion | undefined) =>
+    searchAction(SEARCH_ACTION.SORTING, sorting);
+  const setPagination = (paginationFilter: PaginationFilter) =>
+    searchAction(SEARCH_ACTION.PAGINATION, paginationFilter);
 
   return (
     <SearchContext.Provider value={{
@@ -82,6 +101,8 @@ export function SearchContextProvider(props: PropsWithChildren<object>) {
       setYear,
       setMaxRating,
       setMinRating,
+      setPagination,
+      setSorting
     }}>
       {props.children}
     </SearchContext.Provider>
