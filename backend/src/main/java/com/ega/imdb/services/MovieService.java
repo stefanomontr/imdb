@@ -13,6 +13,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class MovieService {
@@ -40,13 +42,12 @@ public class MovieService {
 
     private Pageable toPageable(PaginationFilter paginationFilter) {
         Pageable pagination;
-        if (CollectionUtils.isNotEmpty(paginationFilter.getSortingCriteria())) {
-            var sorts = paginationFilter.getSortingCriteria().stream()
-                    .map(sorting -> sorting.isAscending()
-                            ? Order.asc(sorting.getField())
-                            : Order.desc(sorting.getField()))
-                    .toList();
-            pagination = PageRequest.of(paginationFilter.getOffset(), paginationFilter.getLimit(), Sort.by(sorts));
+        if (Objects.nonNull(paginationFilter.getSorting())
+                && Objects.nonNull(paginationFilter.getSorting().getField())) {
+            var sorting = paginationFilter.getSorting().isAscending()
+                            ? Order.asc(paginationFilter.getSorting().getField())
+                            : Order.desc(paginationFilter.getSorting().getField());
+            pagination = PageRequest.of(paginationFilter.getOffset(), paginationFilter.getLimit(), Sort.by(sorting));
         } else {
             pagination = PageRequest.of(paginationFilter.getOffset(), paginationFilter.getLimit());
         }
