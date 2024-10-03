@@ -14,14 +14,20 @@ public interface MovieRepository extends PagingAndSortingRepository<Movie, Strin
     @Query("""
     SELECT m FROM Movie m WHERE
         (:title IS NULL OR m.title LIKE %:title%) AND
-        ((:maxRuntime IS NULL AND :minRuntime IS NULL) OR
+        (
+            (:maxRuntime IS NULL AND :minRuntime IS NULL) OR
             (:maxRuntime IS NULL AND m.runtimeMinutes >= :minRuntime) OR
-            (:minRuntime IS NULL AND m.runtimeMinutes <= :maxRuntime)) AND
+            (:minRuntime IS NULL AND m.runtimeMinutes <= :maxRuntime) OR
+            (m.runtimeMinutes >= :minRuntime AND m.runtimeMinutes <= :maxRuntime)
+        ) AND
         (:genre IS NULL OR m.genres LIKE %:genre%) AND
         (:year IS NULL OR m.year = :year) AND
-        ((:maxRating IS NULL AND :minRating IS NULL) OR
+        (
+            (:maxRating IS NULL AND :minRating IS NULL) OR
             (:maxRating IS NULL AND m.rating >= :minRating) OR
-            (:minRating IS NULL AND m.rating <= :maxRating))
+            (:minRating IS NULL AND m.rating <= :maxRating) OR
+            (m.rating >= :minRating AND m.rating <= :maxRating)
+        )
     """)
     Page<Movie> findMovieBySearchCriteria(
             @Param("title") String title,
