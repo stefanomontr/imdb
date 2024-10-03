@@ -1,6 +1,6 @@
 import classes from "./Movies.module.css";
 import border from "../utils/css-utils.ts";
-import SortingOrder from "./SortingOrder.tsx";
+import SortingDirection from "./SortingDirection.tsx";
 import {useContext} from "react";
 import SearchContext from "./SearchContext.tsx";
 
@@ -36,7 +36,7 @@ export default function SearchSorting() {
         <option value={"year"}>Year</option>
         <option value={"rating"}>Rating</option>
       </select>
-      <SortingOrder />
+      <SortingDirection />
     </div>
   );
 }

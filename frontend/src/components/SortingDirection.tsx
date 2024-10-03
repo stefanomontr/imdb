@@ -1,9 +1,28 @@
 import classes from "./Movies.module.css";
 import border from "../utils/css-utils.ts";
+import {useContext} from "react";
+import SearchContext from "./SearchContext.tsx";
 
-export default function SortingOrder() {
+export default function SortingDirection() {
+  const { searchCriteria, setSorting } = useContext(SearchContext);
+  const sorting = searchCriteria.paginationFilter.sorting;
+
+  // @ts-expect-error `e` is generic browser event
+  const onChangeDirectionHandler = e => {
+    if (sorting) {
+      setSorting({
+        ...sorting,
+        ascending: !sorting.ascending
+      });
+    }
+  }
+
+  // TODO style div when order === DESC
   return (
-    <div className={classes.advancedSearch__sortingDirIcon + border()}>
+    <div
+      className={classes.advancedSearch__sortingDirIcon + border()}
+      onClick={onChangeDirectionHandler}
+    >
       <svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" className="ipc-icon ipc-icon--swap-vert"
            viewBox="0 0 24 24" fill="currentColor" role="presentation">
         <path fill="none" d="M0 0h24v24H0V0z"></path>
