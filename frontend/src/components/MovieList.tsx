@@ -1,13 +1,15 @@
 import MovieCell from "./MovieCell.tsx";
 import Page from "../dtos/Page.ts";
 import Movie from "../dtos/Movie.ts";
-import {useContext, useEffect, useState} from "react";
+import {forwardRef, Ref, useContext, useEffect, useImperativeHandle, useState} from "react";
 import SearchContext from "./SearchContext.tsx";
 import fetchFromBackendApi from "../utils/fetch-utils.ts";
 
-export default function MovieList() {
+const MovieList = forwardRef(function MovieList(_props: void, ref: Ref<Omit<Page<Movie>, "content">>) {
   const [movies, setMovies] = useState({} as Page<Movie>);
   const {searchCriteria} = useContext(SearchContext);
+
+  useImperativeHandle(ref, () => movies as Omit<Page<Movie>, "content">, [movies]);
 
   useEffect(() => {
     fetchFromBackendApi<Page<Movie>>("movies/search", {
@@ -25,4 +27,6 @@ export default function MovieList() {
       {movies.content?.map(movie => <MovieCell key={movie.id} movie={movie}/>)}
     </div>
   );
-}
+});
+
+export default MovieList;
