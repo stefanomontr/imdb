@@ -6,7 +6,7 @@ export interface FilterProps {
   fieldTitle: string;
 }
 
-export default function Filter(props: PropsWithChildren<FilterProps>) {
+export default function SearchFilter(props: PropsWithChildren<FilterProps>) {
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandIcon />}>

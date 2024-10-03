@@ -1,13 +1,28 @@
 import MovieCell from "./MovieCell.tsx";
 import Page from "../dtos/Page.ts";
 import Movie from "../dtos/Movie.ts";
+import {useContext, useEffect, useState} from "react";
+import SearchContext from "./SearchContext.tsx";
+import fetchFromBackendApi from "../utils/fetch-utils.ts";
+import classes from "./Movies.module.css";
+import border from "../utils/css-utils.ts";
 
-export interface MovieListProps {
-  movies: Page<Movie>;
-}
+export default function MovieList() {
+  const [movies, setMovies] = useState({} as Page<Movie>);
+  const { searchCriteria } = useContext(SearchContext);
 
-export default function MovieList(props: MovieListProps) {
-  return (<>
-    {props.movies.content?.map(movie => <MovieCell key={movie.id} movie={movie}/>)}
-  </>);
+  useEffect(() => {
+    fetchFromBackendApi<Page<Movie>>("movies/search", {
+      method: "POST",
+      body: JSON.stringify(searchCriteria),
+      headers: new Headers({
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      })
+    }).then(moviePage => setMovies(moviePage));
+  }, [searchCriteria]);
+
+  return (<div className={classes.advancedSearch__movies + border()}>
+    {movies.content?.map(movie => <MovieCell key={movie.id} movie={movie}/>)}
+  </div>);
 }
