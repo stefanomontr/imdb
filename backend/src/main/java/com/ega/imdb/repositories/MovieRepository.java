@@ -11,24 +11,24 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MovieRepository extends PagingAndSortingRepository<Movie, String> {
 
-    @Query("""
-    SELECT m FROM Movie m WHERE
-        (:title IS NULL OR m.title LIKE %:title%) AND
+    @Query(value = """
+    SELECT * FROM movies m WHERE
+        (:title IS NULL OR MATCH(m.TITLE) AGAINST(:title IN NATURAL LANGUAGE MODE)) AND
         (
             (:maxRuntime IS NULL AND :minRuntime IS NULL) OR
-            (:maxRuntime IS NULL AND m.runtimeMinutes >= :minRuntime) OR
-            (:minRuntime IS NULL AND m.runtimeMinutes <= :maxRuntime) OR
-            (m.runtimeMinutes >= :minRuntime AND m.runtimeMinutes <= :maxRuntime)
+            (:maxRuntime IS NULL AND m.RUNTIME >= :minRuntime) OR
+            (:minRuntime IS NULL AND m.RUNTIME <= :maxRuntime) OR
+            (m.RUNTIME >= :minRuntime AND m.RUNTIME <= :maxRuntime)
         ) AND
-        (:genre IS NULL OR m.genres LIKE %:genre%) AND
-        (:year IS NULL OR m.year = :year) AND
+        (:genre IS NULL OR MATCH(m.GENRES) AGAINST(:genre IN NATURAL LANGUAGE MODE)) AND
+        (:year IS NULL OR m.START_YEAR = :year) AND
         (
             (:maxRating IS NULL AND :minRating IS NULL) OR
-            (:maxRating IS NULL AND m.rating >= :minRating) OR
-            (:minRating IS NULL AND m.rating <= :maxRating) OR
-            (m.rating >= :minRating AND m.rating <= :maxRating)
+            (:maxRating IS NULL AND m.RATING >= :minRating) OR
+            (:minRating IS NULL AND m.RATING <= :maxRating) OR
+            (m.RATING >= :minRating AND m.RATING <= :maxRating)
         )
-    """)
+    """, nativeQuery = true)
     Page<Movie> findMovieBySearchCriteria(
             @Param("title") String title,
             @Param("maxRuntime") Integer maxRuntime,

@@ -15,3 +15,6 @@ EXPOSE 3306
 FROM mysql:9 as final
 
 COPY --from=builder /var/lib/mysql /var/lib/mysql
+
+#CMD ["bash"]
+
