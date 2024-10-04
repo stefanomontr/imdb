@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class PaginationFilter {
 
-    private final int offset;
+    private final int pageNumber;
     private final int limit;
     private final SortingCriterion sorting;
 

@@ -7,6 +7,7 @@ export default interface Page<T> {
     },
     totalPages: number;
     totalElements: number;
+    numberOfElements: number;
     first: boolean;
     last: boolean;
 }

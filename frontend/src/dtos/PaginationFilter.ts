@@ -1,7 +1,7 @@
 import SortCriterion from "./SortCriterion.ts";
 
 export default interface PaginationFilter {
-    offset: number;
+    pageNumber: number;
     limit: number;
     sorting: SortCriterion;
 }

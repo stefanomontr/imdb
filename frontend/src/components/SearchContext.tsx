@@ -19,50 +19,76 @@ type SearchContextType = {
 
 const SearchContext = createContext({} as SearchContextType);
 
+export const PAGE_SIZE = 10;
+
 export function SearchContextProvider(props: PropsWithChildren<object>) {
 
-  const initSearchCriteria = {
-    paginationFilter: {
-      offset: 0,
-      limit: 10
-    }
-  } as SearchCriteria;
+  const initPagination = {
+    pageNumber: 0,
+    limit: PAGE_SIZE
+  } as PaginationFilter;
 
   const [searchCriteria, dispatchSearchCriteria] = useReducer(
     (state: SearchCriteria, action: SearchAction): SearchCriteria => {
       switch (action.type) {
         case SEARCH_ACTION.TITLE:
-          return ({...state, title: action.payload.value});
+          return {
+            ...state, title:
+            action.payload.value,
+            paginationFilter: initPagination
+          };
         case SEARCH_ACTION.MAX_RUNTIME:
-          return ({...state, maxRuntime: action.payload.value});
+          return {
+            ...state,
+            maxRuntime: action.payload.value,
+            paginationFilter: initPagination
+          };
         case SEARCH_ACTION.MIN_RUNTIME:
-          return ({...state, minRuntime: action.payload.value});
+          return {
+            ...state,
+            minRuntime: action.payload.value,
+            paginationFilter: initPagination
+          };
         case SEARCH_ACTION.GENRE:
-          return ({...state, genre: action.payload.value});
+          return {
+            ...state,
+            genre: action.payload.value,
+            paginationFilter: initPagination
+          };
         case SEARCH_ACTION.YEAR:
-          return ({...state, year: action.payload.value});
+          return {
+            ...state,
+            year: action.payload.value,
+            paginationFilter: initPagination
+          };
         case SEARCH_ACTION.MAX_RATING:
-          return ({...state, maxRating: action.payload.value});
+          return {
+            ...state,
+            maxRating: action.payload.value,
+            paginationFilter: initPagination
+          };
         case SEARCH_ACTION.MIN_RATING:
-          return ({...state, minRating: action.payload.value});
+          return {
+            ...state,
+            minRating: action.payload.value,
+            paginationFilter: initPagination
+          };
         case SEARCH_ACTION.PAGINATION:
-          // TODO
-          return state;
+          return {...state, paginationFilter: action.payload.value};
         case SEARCH_ACTION.SORTING:
-          return ({
+          return {
             ...state,
             paginationFilter: {
-              ...state.paginationFilter,
+              ...initPagination,
               sorting: action.payload.value
             }
-          });
+          };
         default:
           return state;
       }
-    }, initSearchCriteria
+    }, { paginationFilter: initPagination } as SearchCriteria
   );
 
-  // TODO add equality check here
   const searchAction = (actionType: string, value: any) => {
     dispatchSearchCriteria({
       "type": actionType,
