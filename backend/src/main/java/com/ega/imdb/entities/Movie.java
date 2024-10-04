@@ -27,6 +27,7 @@ public class Movie {
     @Column(name = "GENRES")
     String genres;
 
+    // TODO align column names with attr names
     @Column(name = "START_YEAR")
     Integer year;
 

@@ -43,9 +43,14 @@ public class MovieService {
         Pageable pagination;
         if (Objects.nonNull(paginationFilter.getSorting())
                 && Objects.nonNull(paginationFilter.getSorting().getField())) {
+            var field = switch (paginationFilter.getSorting().getField()) {
+                case "year" -> "START_YEAR";
+                case "runtimeMinutes" -> "RUNTIME";
+                default -> paginationFilter.getSorting().getField();
+            };
             var sorting = paginationFilter.getSorting().isAscending()
-                            ? Order.asc(paginationFilter.getSorting().getField())
-                            : Order.desc(paginationFilter.getSorting().getField());
+                            ? Order.asc(field)
+                            : Order.desc(field);
             pagination = PageRequest.of(paginationFilter.getPageNumber(), paginationFilter.getLimit(), Sort.by(sorting));
         } else {
             pagination = PageRequest.of(paginationFilter.getPageNumber(), paginationFilter.getLimit());
