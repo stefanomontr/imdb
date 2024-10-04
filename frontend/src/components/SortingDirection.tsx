@@ -5,14 +5,13 @@ import SearchContext from "./SearchContext.tsx";
 
 export default function SortingDirection() {
   const { searchCriteria, setSorting } = useContext(SearchContext);
-  const sorting = searchCriteria.paginationFilter.sorting;
 
   // @ts-expect-error `e` is generic browser event
   const onChangeDirectionHandler = e => {
-    if (sorting) {
+    if (searchCriteria.sortingField) {
       setSorting({
-        ...sorting,
-        ascending: !sorting.ascending
+        sortingField: searchCriteria.sortingField,
+        ascendingSorting: !searchCriteria.ascendingSorting
       });
     }
   }

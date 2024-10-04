@@ -12,12 +12,12 @@ export default function SearchSorting() {
   // @ts-expect-error `e` is generic browser event
   const onSortHandler = e => {
     const newValue = e.target.value;
-    if (newValue === NO_SORTING && searchCriteria.paginationFilter.sorting !== newValue) {
+    if (newValue === NO_SORTING && searchCriteria.sortingField !== newValue) {
       setSorting(undefined);
-    } else if (searchCriteria.paginationFilter.sorting !== newValue) {
+    } else if (searchCriteria.sortingField !== newValue) {
       setSorting({
-        field: newValue,
-        ascending: true
+        sortingField: newValue,
+        ascendingSorting: true
       });
     }
   };
@@ -26,8 +26,8 @@ export default function SearchSorting() {
     <div className={classes.advancedSearch__sorting + border()}>
       <span>Sort by </span>
       <select
-        key={searchCriteria.paginationFilter.sorting?.field}
-        defaultValue={searchCriteria.paginationFilter.sorting?.field}
+        key={searchCriteria.sortingField}
+        defaultValue={searchCriteria.sortingField}
         onChange={onSortHandler}
       >
         <option value={NO_SORTING}>{NO_SORTING}</option>

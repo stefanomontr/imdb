@@ -1,6 +1,6 @@
-import PaginationFilter from "./PaginationFilter.ts";
+import PaginatedDTO from "./PaginatedDTO.ts";
 
-export default interface SearchCriteria {
+export default interface SearchCriteria extends PaginatedDTO {
     title?: string;
     maxRuntime?: number;
     minRuntime?: number;
@@ -8,5 +8,4 @@ export default interface SearchCriteria {
     year?: number;
     maxRating?: number;
     minRating?: number;
-    paginationFilter: PaginationFilter;
 }

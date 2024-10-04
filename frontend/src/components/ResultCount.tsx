@@ -9,7 +9,7 @@ export interface ResultCountProps {
 
 export default function ResultCount(props: ResultCountProps) {
   const renderResultCount = () => {
-    if (props.pageInfo.pageable) {
+    if (props.pageInfo && props.pageInfo.pageable) {
       const lastResult = props.pageInfo.pageable.offset + props.pageInfo.numberOfElements;
       const total = props.pageInfo.totalElements;
       return `0 - ${lastResult <= total ? lastResult : total} of ${total}`;

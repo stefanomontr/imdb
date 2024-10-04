@@ -12,9 +12,11 @@ public class SearchCriteria {
     private final Integer minRuntime;
     private final Integer maxRating;
     private final Integer minRating;
-    // TODO: search by multiple genres
     private final String genre;
     private final Integer year;
-    private final PaginationFilter paginationFilter;
 
+    private final int pageNumber;
+    private final int pageSize;
+    private final String sortingField;
+    private final boolean ascendingSorting;
 }
