@@ -18,11 +18,11 @@ export default function SearchResults() {
   const {
     data,
     isPlaceholderData,
-    isPending,
     isError,
     error,
     hasNextPage,
-    fetchNextPage
+    fetchNextPage,
+    isFetchingNextPage
   } = useInfiniteQuery<Page<Movie>, Error>({
     getNextPageParam: (lastPage, ..._args) => {
       if (lastPage.last) {
@@ -37,40 +37,32 @@ export default function SearchResults() {
     placeholderData: keepPreviousData
   });
 
-  const extractPageInfo = (page: Page<Movie>) => {
-    const {content, ...pageInfo} = page;
-    return pageInfo;
+  const extractPageInfo = (moviePage: Page<Movie> | undefined) => {
+    if (moviePage) {
+      const {content, ...pageInfo} = moviePage;
+      return pageInfo;
+    }
+    return {} as PageInfo;
   }
 
-  const lastPage = data && data.pages[data.pages.length-1];
-  const pageInfo = lastPage && extractPageInfo(lastPage) || {} as PageInfo;
+  const moviePages = (data?.pages || []);
+  const lastPage = data?.pages[data.pages.length - 1];
+  const pageInfo = extractPageInfo(lastPage);
 
-  let searchResults;
-
-  // new data
-  if (data && !isPlaceholderData) {
-    searchResults = <MovieList movies={data.pages.reduce((movies, currPage) => [
-      ...movies, ...currPage.content
-    ], [] as Movie[])} />;
-  }
-  // pending with no prev data
-  if (isPending && !data) {
-    searchResults = <MovieList movies={[]} />;
-  }
-  // prev data while fetching new data
-  if (data && isPlaceholderData) {
-    searchResults = <>LOADING ...<MovieList movies={data.pages.reduce((movies, currPage) => [
-      ...movies, ...currPage.content
-    ], [] as Movie[])} /></>;
-  }
-  if (isError) {
-    searchResults = <>{error?.message || "Error in retrieving movies"}</>
-  }
+  const renderError = () =>
+    isError && <>{error?.message || "Error in retrieving movies"}</>;
+  const renderLoading = () =>
+    data && (isPlaceholderData || isFetchingNextPage) && "LOADING NEW DATA...";
 
   return (
     <div className={classes.advancedSearch__resultsContainer + border()}>
-      <ResultBar pageInfo={pageInfo || {} as PageInfo}/>
-      {searchResults}
+      <ResultBar pageInfo={pageInfo}/>
+      {renderError()}
+      {renderLoading()}
+      <MovieList movies={moviePages.reduce((movies, currPage) => [
+        ...movies,
+        ...currPage.content
+      ], [] as Movie[])} />
       <ProgressiveLoading
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage}
