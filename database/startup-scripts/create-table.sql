@@ -1,0 +1,11 @@
+CREATE TABLE movies
+(
+    ID         VARCHAR(12),
+    TITLE      VARCHAR(255),
+    GENRES     VARCHAR(255),
+    START_YEAR INT,
+    RUNTIME    INT,
+    RATING     FLOAT,
+    NUM_VOTES  INT,
+    PRIMARY KEY (ID)
+);
