@@ -1,8 +1,7 @@
 import {Chip} from "@mui/material";
 import {useContext} from "react";
 import SearchContext from "./SearchContext.tsx";
-import border from "../utils/css-utils.ts";
-import classes from "./Movies.module.css";
+import classes from "../css/MovieSearch.module.css";
 
 export default function FilterChips() {
 
@@ -47,27 +46,34 @@ export default function FilterChips() {
     }
   ].filter(({value}) => value);
 
-  const sorting = searchCtx.searchCriteria.paginationFilter.sorting;
+  const renderSortingChip = () => {
+    const sortingField = searchCtx.searchCriteria.sortingField;
+    const ascendingSorting = searchCtx.searchCriteria.ascendingSorting;
+    if (!sortingField) {
+      return false;
+    }
+    return <Chip
+      key={`${sortingField} ${ascendingSorting}`}
+      label={`Sort by: ${sortingField} ${ascendingSorting ? "ASC" : "DESC"}`}
+      onDelete={() => searchCtx.setSorting(undefined)}
+    />;
+  }
 
   return (
-    <div className={classes.advancedSearch__filterChips + border()}>
+    <div className={classes.search__filterChips}>
       {searchFields.map(searchField => {
         const chipLabel = `${searchField.fieldLabel}: ${searchField.value}`;
         return (
-          <Chip
-            key={chipLabel}
-            label={chipLabel}
-            onDelete={() => searchField.setField(undefined)}
-          />
+          <div className={classes.search__filterChip}>
+            <Chip
+              key={chipLabel}
+              label={chipLabel}
+              onDelete={() => searchField.setField(undefined)}
+            />
+          </div>
         );
       })}
-      {sorting &&
-        <Chip
-          key={`${sorting.field} ${sorting.ascending}`}
-          label={`Sort by: ${sorting.field} ${sorting.ascending ? "ASC" : "DESC"}`}
-          onDelete={() => searchCtx.setSorting(undefined)}
-        />
-      }
+      {renderSortingChip()}
     </div>
   );
 }

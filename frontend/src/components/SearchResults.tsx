@@ -1,48 +1,71 @@
 import MovieList from "./MovieList.tsx";
-import classes from "./Movies.module.css";
-import border from "../utils/css-utils.ts";
+import classes from "../css/MovieSearch.module.css";
 import ResultBar from "./ResultBar.tsx";
-import {useContext, useEffect, useState} from "react";
+import {useContext} from "react";
+import SearchContext from "./SearchContext.tsx";
+import ProgressiveLoading from "./ProgressiveLoading.tsx";
+import {keepPreviousData, useInfiniteQuery} from "@tanstack/react-query";
+import {paginatedSearch} from "../utils/fetch-utils.ts";
 import Page from "../dtos/Page.ts";
 import Movie from "../dtos/Movie.ts";
-import SearchContext from "./SearchContext.tsx";
-import fetchFromBackendApi from "../utils/fetch-utils.ts";
-import ProgressiveLoading from "./ProgressiveLoading.tsx";
+
+import {PageInfo} from "../dtos/PageInfo.ts";
 
 export default function SearchResults() {
-  const [moviePage, setMoviePage] = useState({} as Page<Movie>);
-  const {content, ...pageInfo} = moviePage;
   const { searchCriteria } = useContext(SearchContext);
 
-  useEffect(() => {
-    fetchFromBackendApi<Page<Movie>>("movies/search", {
-      method: "POST",
-      body: JSON.stringify(searchCriteria),
-      headers: new Headers({
-        "Content-Type": "application/json",
-        "Accept": "application/json"
-      })
-    }).then(newPage => {
-      // if this is the first page
-      if (newPage.first) {
-        setMoviePage(newPage);
-      } else {
-        setMoviePage(prevPage => ({
-          ...newPage,
-          content: [...prevPage.content, ...newPage.content]
-        }));
+  const {
+    data,
+    isPlaceholderData,
+    isError,
+    error,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage
+  } = useInfiniteQuery<Page<Movie>, Error>({
+    getNextPageParam: (lastPage, ..._args) => {
+      if (lastPage.last) {
+        return null;
       }
-    });
-  }, [searchCriteria]);
+      return lastPage.pageable.pageNumber + 1;
+    },
+    initialPageParam: 0,
+    queryKey: ["movies", searchCriteria],
+    queryFn: ({ signal, pageParam }) => paginatedSearch({ signal, pageParam, searchCriteria}),
+    enabled: query => !query.isStale(),
+    placeholderData: keepPreviousData
+  });
 
-  const canLoadMore = moviePage.pageable &&
-    moviePage.pageable.offset + moviePage.numberOfElements < moviePage.totalElements;
+  const extractPageInfo = (moviePage: Page<Movie> | undefined) => {
+    if (moviePage) {
+      const {content, ...pageInfo} = moviePage;
+      return pageInfo;
+    }
+    return {} as PageInfo;
+  }
+
+  const moviePages = (data?.pages || []);
+  const lastPage = data?.pages[data.pages.length - 1];
+  const pageInfo = extractPageInfo(lastPage);
+
+  const renderError = () =>
+    isError && <>{error?.message || "Error in retrieving movies"}</>;
+  const renderLoading = () =>
+    data && (isPlaceholderData || isFetchingNextPage) && "LOADING NEW DATA...";
 
   return (
-    <div className={classes.advancedSearch__resultsContainer + border()}>
+    <div className={classes.search__resultsContainer}>
       <ResultBar pageInfo={pageInfo}/>
-      <MovieList movies={moviePage.content || []} />
-      <ProgressiveLoading canLoadMore={canLoadMore} />
+      {renderError()}
+      {renderLoading()}
+      <MovieList movies={moviePages.reduce((movies, currPage) => [
+        ...movies,
+        ...currPage.content
+      ], [] as Movie[])} />
+      <ProgressiveLoading
+        fetchNextPage={fetchNextPage}
+        hasNextPage={hasNextPage}
+      />
     </div>
   );
 }

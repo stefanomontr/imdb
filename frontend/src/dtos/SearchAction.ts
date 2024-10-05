@@ -1,4 +1,4 @@
-export const SEARCH_ACTION = {
+export const SEARCH_ACTION_TYPE = {
   TITLE: "SEARCH_TITLE",
   MAX_RUNTIME: "SEARCH_MAX_RUNTIME",
   MIN_RUNTIME: "SEARCH_MIN_RUNTIME",
@@ -6,15 +6,14 @@ export const SEARCH_ACTION = {
   YEAR: "SEARCH_YEAR",
   MIN_RATING: "SEARCH_MIN_RATING",
   MAX_RATING: "SEARCH_MAX_RATING",
-  PAGINATION: "PAGINATION",
   SORTING: "SORTING",
-  SORTING_DIRECTION: "SORTING_DIRECTION"
 };
 
-export type SearchAction = {
+type SearchAction = {
   type: string;
   payload: {
     value: any
   }
 };
 
+export default SearchAction;

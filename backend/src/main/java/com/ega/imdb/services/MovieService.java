@@ -1,6 +1,5 @@
 package com.ega.imdb.services;
 
-import com.ega.imdb.dtos.PaginationFilter;
 import com.ega.imdb.dtos.SearchCriteria;
 import com.ega.imdb.entities.Movie;
 import com.ega.imdb.repositories.MovieRepository;
@@ -20,13 +19,10 @@ public class MovieService {
 
     private final MovieRepository movieRepository;
 
-    public Page<Movie> getPaginatedMovies(PaginationFilter paginationFilter) {
-        var pagination = toPageable(paginationFilter);
-        return movieRepository.findAll(pagination);
-    }
-
     public Page<Movie> getPaginatedMoviesByCriteria(SearchCriteria sc) {
-        var pagination = toPageable(sc.getPaginationFilter());
+        var pagination = toPageable(sc.getPageNumber(), sc.getPageSize(),
+                sc.getSortingField(), sc.isAscendingSorting());
+
         return movieRepository.findMovieBySearchCriteria(
                 sc.getTitle(),
                 sc.getMaxRuntime(),
@@ -39,22 +35,17 @@ public class MovieService {
         );
     }
 
-    private Pageable toPageable(PaginationFilter paginationFilter) {
-        Pageable pagination;
-        if (Objects.nonNull(paginationFilter.getSorting())
-                && Objects.nonNull(paginationFilter.getSorting().getField())) {
-            var field = switch (paginationFilter.getSorting().getField()) {
+    private Pageable toPageable(int pageNumber, int pageSize, String sortingField, boolean ascendingSorting) {
+        if (Objects.nonNull(sortingField)) {
+            var field = switch (sortingField) {
                 case "year" -> "START_YEAR";
                 case "runtimeMinutes" -> "RUNTIME";
-                default -> paginationFilter.getSorting().getField();
+                default -> sortingField;
             };
-            var sorting = paginationFilter.getSorting().isAscending()
-                            ? Order.asc(field)
-                            : Order.desc(field);
-            pagination = PageRequest.of(paginationFilter.getPageNumber(), paginationFilter.getLimit(), Sort.by(sorting));
+            var sorting = ascendingSorting ? Order.asc(field) : Order.desc(field);
+            return PageRequest.of(pageNumber, pageSize, Sort.by(sorting));
         } else {
-            pagination = PageRequest.of(paginationFilter.getPageNumber(), paginationFilter.getLimit());
+            return PageRequest.of(pageNumber, pageSize);
         }
-        return pagination;
     }
 }

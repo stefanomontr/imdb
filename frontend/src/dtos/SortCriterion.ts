@@ -1,4 +1,4 @@
 export default interface SortCriterion {
-    field: string;
-    ascending: boolean;
+    sortingField: string;
+    ascendingSorting: boolean;
 }

@@ -1,5 +1,4 @@
-import classes from "./Movies.module.css";
-import border from "../utils/css-utils.ts";
+import classes from "../css/MovieSearch.module.css";
 import SortingDirection from "./SortingDirection.tsx";
 import {useContext} from "react";
 import SearchContext from "./SearchContext.tsx";
@@ -12,22 +11,22 @@ export default function SearchSorting() {
   // @ts-expect-error `e` is generic browser event
   const onSortHandler = e => {
     const newValue = e.target.value;
-    if (newValue === NO_SORTING && searchCriteria.paginationFilter.sorting !== newValue) {
+    if (newValue === NO_SORTING && searchCriteria.sortingField !== newValue) {
       setSorting(undefined);
-    } else if (searchCriteria.paginationFilter.sorting !== newValue) {
+    } else if (searchCriteria.sortingField !== newValue) {
       setSorting({
-        field: newValue,
-        ascending: true
+        sortingField: newValue,
+        ascendingSorting: true
       });
     }
   };
 
   return (
-    <div className={classes.advancedSearch__sorting + border()}>
-      <span>Sort by </span>
+    <div className={classes.search__sorting}>
+      <label>Sort by </label>
       <select
-        key={searchCriteria.paginationFilter.sorting?.field}
-        defaultValue={searchCriteria.paginationFilter.sorting?.field}
+        key={searchCriteria.sortingField}
+        defaultValue={searchCriteria.sortingField}
         onChange={onSortHandler}
       >
         <option value={NO_SORTING}>{NO_SORTING}</option>

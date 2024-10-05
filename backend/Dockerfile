@@ -2,8 +2,8 @@ FROM mysql:9 AS builder
 
 ENV MYSQL_ROOT_PASSWORD=root
 ENV MYSQL_DATABASE=IMDB
-# MySql DB is run on the same container, i.e. localhost
 ENV MYSQL_HOST=localhost
+ENV FRONTEND_HOST=localhost
 
 # manual openjdk17 installation copyied from official image
 ENV JAVA_HOME=/usr/java/openjdk-17

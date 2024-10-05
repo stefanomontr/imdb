@@ -5,13 +5,13 @@ ENV BACKEND_API=http://backend
 WORKDIR /frontend
 
 COPY package.json .
-
 RUN npm install
-
+RUN npm i -g serve
 COPY . .
+RUN npm run build
 
-EXPOSE 5173
+VOLUME ["/frontend/node_modules"]
 
-VOLUME ["/app/node_modules"]
+EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+CMD [ "serve", "-s", "dist" ]

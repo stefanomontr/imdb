@@ -10,7 +10,7 @@ export default function SearchFilter(props: PropsWithChildren<FilterProps>) {
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandIcon />}>
-        <Typography>{props.fieldTitle}</Typography>
+        <Typography fontWeight={"bold"}>{props.fieldTitle}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         {props.children}

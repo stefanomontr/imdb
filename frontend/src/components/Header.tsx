@@ -1,5 +1,5 @@
 import ImdbLogo from "./ImdbLogo.tsx";
-import classes from "./Header.module.css";
+import classes from "../css/Header.module.css";
 
 export default function Header() {
   return (

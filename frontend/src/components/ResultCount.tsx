@@ -1,5 +1,4 @@
-import classes from "./Movies.module.css";
-import border from "../utils/css-utils.ts";
+import classes from "../css/MovieSearch.module.css";
 import Page from "../dtos/Page.ts";
 import Movie from "../dtos/Movie.ts";
 
@@ -9,7 +8,7 @@ export interface ResultCountProps {
 
 export default function ResultCount(props: ResultCountProps) {
   const renderResultCount = () => {
-    if (props.pageInfo.pageable) {
+    if (props.pageInfo && props.pageInfo.pageable) {
       const lastResult = props.pageInfo.pageable.offset + props.pageInfo.numberOfElements;
       const total = props.pageInfo.totalElements;
       return `0 - ${lastResult <= total ? lastResult : total} of ${total}`;
@@ -18,7 +17,7 @@ export default function ResultCount(props: ResultCountProps) {
   }
 
   return (
-    <div className={classes.advancedSearch__resultCount + border()}>
+    <div className={classes.search__resultCount}>
       {renderResultCount()}
     </div>
   );
