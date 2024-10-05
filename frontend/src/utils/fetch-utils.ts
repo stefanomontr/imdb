@@ -23,7 +23,7 @@ export async function fetchFromBackendApi<T>(url: string, options: RequestInit):
 }
 
 export type PaginatedSearchRequest = {
-    pageParam: number;
+    pageParam: number | unknown;
     searchCriteria: SearchCriteria;
     signal: AbortSignal;
 }

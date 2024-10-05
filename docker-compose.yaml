@@ -16,7 +16,7 @@ services:
       dockerfile: Dockerfile
     environment:
       MYSQL_HOST: mysql
-      FRONTEND_HOST: http://frontend:5173
+      FRONTEND_HOST: http://localhost:3000
     ports:
       - "8080:8080"
     depends_on:
@@ -29,7 +29,7 @@ services:
     environment:
       BACKEND_API: http://backend:8080
     ports:
-      - "5173:5173"
+      - "3000:3000"
     volumes:
       - ./frontend:/frontend
     depends_on:
