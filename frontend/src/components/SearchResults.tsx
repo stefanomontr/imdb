@@ -3,13 +3,14 @@ import classes from "../css/MovieSearch.module.css";
 import ResultBar from "./ResultBar.tsx";
 import {useContext} from "react";
 import SearchContext from "./SearchContext.tsx";
-import ProgressiveLoading from "./ProgressiveLoading.tsx";
+import LoadMore from "./LoadMore.tsx";
 import {keepPreviousData, useInfiniteQuery} from "@tanstack/react-query";
 import {paginatedSearch} from "../utils/fetch-utils.ts";
 import Page from "../dtos/Page.ts";
 import Movie from "../dtos/Movie.ts";
 
 import {PageInfo} from "../dtos/PageInfo.ts";
+import Loader from "./Loader.tsx";
 
 export default function SearchResults() {
   const { searchCriteria } = useContext(SearchContext);
@@ -51,7 +52,7 @@ export default function SearchResults() {
   const renderError = () =>
     isError && <>{error?.message || "Error in retrieving movies"}</>;
   const renderLoading = () =>
-    data && (isPlaceholderData || isFetchingNextPage) && "LOADING NEW DATA...";
+    data && (isPlaceholderData) && <Loader />;
 
   return (
     <div className={classes.search__resultsContainer}>
@@ -62,7 +63,8 @@ export default function SearchResults() {
         ...movies,
         ...currPage.content
       ], [] as Movie[])} />
-      <ProgressiveLoading
+      <LoadMore
+        isFetchingNextPage={isFetchingNextPage}
         fetchNextPage={fetchNextPage}
         hasNextPage={hasNextPage}
       />

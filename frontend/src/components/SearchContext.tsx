@@ -23,42 +23,25 @@ export function SearchContextProvider(props: PropsWithChildren<object>) {
 
   const [searchCriteria, dispatchSearchCriteria] = useReducer(
     (state: SearchCriteria, action: SearchAction): SearchCriteria => {
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const {sortingField, ascendingSorting, ...noSortState} = state;
+
       switch (action.type) {
         case SEARCH_ACTION_TYPE.TITLE:
-          return {
-            ...state, title:
-            action.payload.value
-          };
+          return {...noSortState, title: action.payload.value};
         case SEARCH_ACTION_TYPE.MAX_RUNTIME:
-          return {
-            ...state,
-            maxRuntime: action.payload.value
-          };
+          return {...noSortState, maxRuntime: action.payload.value};
         case SEARCH_ACTION_TYPE.MIN_RUNTIME:
-          return {
-            ...state,
-            minRuntime: action.payload.value
-          };
+          return {...noSortState, minRuntime: action.payload.value};
         case SEARCH_ACTION_TYPE.GENRE:
-          return {
-            ...state,
-            genre: action.payload.value
-          };
+          return {...noSortState, genre: action.payload.value};
         case SEARCH_ACTION_TYPE.YEAR:
-          return {
-            ...state,
-            year: action.payload.value
-          };
+          return {...noSortState, year: action.payload.value};
         case SEARCH_ACTION_TYPE.MAX_RATING:
-          return {
-            ...state,
-            maxRating: action.payload.value
-          };
+          return {...noSortState, maxRating: action.payload.value};
         case SEARCH_ACTION_TYPE.MIN_RATING:
-          return {
-            ...state,
-            minRating: action.payload.value
-          };
+          return {...noSortState, minRating: action.payload.value};
         case SEARCH_ACTION_TYPE.SORTING:
           return {
             ...state,

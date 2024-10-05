@@ -3,7 +3,7 @@ import {useContext} from "react";
 import SearchContext from "./SearchContext.tsx";
 
 export default function SortingDirection() {
-  const { searchCriteria, setSorting } = useContext(SearchContext);
+  const {searchCriteria, setSorting} = useContext(SearchContext);
 
   // @ts-expect-error `e` is generic browser event
   const onChangeDirectionHandler = e => {
@@ -15,14 +15,17 @@ export default function SortingDirection() {
     }
   }
 
-  // TODO style div when order === DESC
   return (
     <div onClick={onChangeDirectionHandler}>
       <svg
-        className={classes.search__sortingDirIcon}
+        className={
+          searchCriteria.sortingField
+            ? classes.search__sortingDirIcon
+            : classes.search__sortingDirIcon_disabled
+        }
         width="24" height="24" xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24" fill="currentColor" role="presentation">
-        <path fill="none" d="M0 0h24v24H0V0z" />
+        <path fill="none" d="M0 0h24v24H0V0z"/>
         <path
           d={
             `M16 17.01V11c0-.55-.45-1-1-1s-1 .45-1 1v6.01h-1.79c-.45 

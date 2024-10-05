@@ -41,6 +41,9 @@ export default function MovieCell(props: MovieProps) {
             {hours && hours > 0 ? `${hours}h` : ""}
             {minutes && minutes > 0 ? `${minutes}m` : ""}
           </span>
+          <span className={classes.search__movieGenre}>
+            {props.movie.genres?.toLowerCase().replace(/,/g, ", ")}
+          </span>
         </div>
         <div>
           <ReviewStar/>
