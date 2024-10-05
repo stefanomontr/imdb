@@ -17,6 +17,7 @@ export default function SearchResults() {
 
   const {
     data,
+    isLoading,
     isPlaceholderData,
     isError,
     error,
@@ -24,6 +25,7 @@ export default function SearchResults() {
     fetchNextPage,
     isFetchingNextPage
   } = useInfiniteQuery<Page<Movie>, Error>({
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     getNextPageParam: (lastPage, ..._args) => {
       if (lastPage.last) {
         return null;
@@ -33,12 +35,12 @@ export default function SearchResults() {
     initialPageParam: 0,
     queryKey: ["movies", searchCriteria],
     queryFn: ({ signal, pageParam }) => paginatedSearch({ signal, pageParam, searchCriteria}),
-    enabled: query => !query.isStale(),
     placeholderData: keepPreviousData
   });
 
   const extractPageInfo = (moviePage: Page<Movie> | undefined) => {
     if (moviePage) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const {content, ...pageInfo} = moviePage;
       return pageInfo;
     }
@@ -52,7 +54,7 @@ export default function SearchResults() {
   const renderError = () =>
     isError && <>{error?.message || "Error in retrieving movies"}</>;
   const renderLoading = () =>
-    data && (isPlaceholderData) && <Loader />;
+    (isLoading || isPlaceholderData) && <Loader />;
 
   return (
     <div className={classes.search__resultsContainer}>
