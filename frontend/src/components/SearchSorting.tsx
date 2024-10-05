@@ -1,5 +1,4 @@
-import classes from "./Movies.module.css";
-import border from "../utils/css-utils.ts";
+import classes from "../css/MovieSearch.module.css";
 import SortingDirection from "./SortingDirection.tsx";
 import {useContext} from "react";
 import SearchContext from "./SearchContext.tsx";
@@ -23,8 +22,8 @@ export default function SearchSorting() {
   };
 
   return (
-    <div className={classes.advancedSearch__sorting + border()}>
-      <span>Sort by </span>
+    <div className={classes.search__sorting}>
+      <label>Sort by </label>
       <select
         key={searchCriteria.sortingField}
         defaultValue={searchCriteria.sortingField}

@@ -1,6 +1,8 @@
 import Movie from "../dtos/Movie.ts";
-import styles from "./Movies.module.css";
+import classes from "../css/MovieSearch.module.css";
 import poster from "./../assets/sample-poster.jpg";
+import ReviewStar from "./ReviewStar.tsx";
+import {formatNumVotes} from "../utils/math-utils.ts";
 
 export interface MovieProps {
   movie: Movie
@@ -12,26 +14,43 @@ export default function MovieCell(props: MovieProps) {
   const minutes = props.movie.runtimeMinutes && props.movie.runtimeMinutes % 60;
 
   return (
-    <div className={styles.advancedSearch__movie}>
-      <div className={`${styles.advancedSearch__moviePoster} ${styles.border}`}>
-        <img src={poster} style={{ width: "50px"}}/>
+    <div className={classes.search__movie}>
+      <div className={`${classes.search__moviePoster}`}>
+        <img src={poster} style={{width: "50px"}}/>
       </div>
-      <div className={`${styles.advancedSearch__movieInfo} ${styles.border}`}>
+      <div className={`${classes.search__movieInfo}`}>
         <div>
           <a
+            className={classes.search__movieTitle}
             href={`https://www.imdb.com/title/${props.movie.id}/?ref_=sr_t_1`}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {props.movie.title}
+            {
+              props.movie.title.length <= 60
+                ? props.movie.title
+                : `${props.movie.title.substring(0, 60)}...`
+            }
           </a>
         </div>
         <div>
-          {props.movie.year}
-          {hours && hours > 0 ? `${hours}h` : ""}
-          {minutes && minutes > 0 ? `${minutes}m` : ""}
+          <span className={classes.search__movieYear}>
+            {props.movie.year}
+          </span>
+          <span className={classes.search__movieRuntime}>
+            {hours && hours > 0 ? `${hours}h` : ""}
+            {minutes && minutes > 0 ? `${minutes}m` : ""}
+          </span>
         </div>
-        <div>{props.movie.rating} based on {props.movie.numVotes} reviews</div>
+        <div>
+          <ReviewStar/>
+          <span className={classes.search__movieRating}>
+            {props.movie.rating || "--"}
+          </span>
+          <span className={classes.search__movieReviewNum}>
+            {props.movie.numVotes && `(${formatNumVotes(props.movie.numVotes)})`}
+          </span>
+        </div>
       </div>
     </div>
   );

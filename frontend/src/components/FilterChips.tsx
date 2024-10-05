@@ -1,8 +1,7 @@
 import {Chip} from "@mui/material";
 import {useContext} from "react";
 import SearchContext from "./SearchContext.tsx";
-import border from "../utils/css-utils.ts";
-import classes from "./Movies.module.css";
+import classes from "../css/MovieSearch.module.css";
 
 export default function FilterChips() {
 
@@ -61,15 +60,17 @@ export default function FilterChips() {
   }
 
   return (
-    <div className={classes.advancedSearch__filterChips + border()}>
+    <div className={classes.search__filterChips}>
       {searchFields.map(searchField => {
         const chipLabel = `${searchField.fieldLabel}: ${searchField.value}`;
         return (
-          <Chip
-            key={chipLabel}
-            label={chipLabel}
-            onDelete={() => searchField.setField(undefined)}
-          />
+          <div className={classes.search__filterChip}>
+            <Chip
+              key={chipLabel}
+              label={chipLabel}
+              onDelete={() => searchField.setField(undefined)}
+            />
+          </div>
         );
       })}
       {renderSortingChip()}

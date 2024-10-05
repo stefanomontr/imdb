@@ -3,14 +3,13 @@ import {useContext} from "react";
 import NumberField from "./NumberField.tsx";
 import TextField from "./TextField.tsx";
 import SearchContext from "./SearchContext.tsx";
-import classes from "./Movies.module.css";
-import border from "../utils/css-utils.ts";
+import classes from "../css/MovieSearch.module.css";
 
 export default function SearchFilters() {
   const searchCtx = useContext(SearchContext);
 
   return (
-    <div className={classes.advancedSearch__filters + border()}>
+    <div className={classes.search__filters}>
       <SearchFilter fieldTitle={"Title"}>
         <TextField
           key={searchCtx.searchCriteria.title}
@@ -20,7 +19,7 @@ export default function SearchFilters() {
         />
       </SearchFilter>
       <SearchFilter fieldTitle={"Runtime"}>
-        <span>More than minutes </span>
+        <span>From</span>
         <NumberField
           key={searchCtx.searchCriteria.minRuntime}
           value={searchCtx.searchCriteria.minRuntime}
@@ -29,7 +28,7 @@ export default function SearchFilters() {
           placeholder={"Set min runtime minutes"}
           setField={searchCtx.setMinRuntime}
         />
-        <span>Less than minutes </span>
+        <span>To</span>
         <NumberField
           key={searchCtx.searchCriteria.maxRuntime}
           value={searchCtx.searchCriteria.maxRuntime}
@@ -58,7 +57,7 @@ export default function SearchFilters() {
         />
       </SearchFilter>
       <SearchFilter fieldTitle={"Average Rating"}>
-        <span>More than stars </span>
+        <span>From</span>
         <NumberField
           key={searchCtx.searchCriteria.minRating}
           value={searchCtx.searchCriteria.minRating}
@@ -67,7 +66,7 @@ export default function SearchFilters() {
           placeholder={"Set min average rating"}
           setField={searchCtx.setMinRating}
         />
-        <span>Less than minutes </span>
+        <span>To</span>
         <NumberField
           key={searchCtx.searchCriteria.maxRating}
           value={searchCtx.searchCriteria.maxRating}

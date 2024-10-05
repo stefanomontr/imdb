@@ -1,6 +1,5 @@
 import MovieList from "./MovieList.tsx";
-import classes from "./Movies.module.css";
-import border from "../utils/css-utils.ts";
+import classes from "../css/MovieSearch.module.css";
 import ResultBar from "./ResultBar.tsx";
 import {useContext} from "react";
 import SearchContext from "./SearchContext.tsx";
@@ -55,7 +54,7 @@ export default function SearchResults() {
     data && (isPlaceholderData || isFetchingNextPage) && "LOADING NEW DATA...";
 
   return (
-    <div className={classes.advancedSearch__resultsContainer + border()}>
+    <div className={classes.search__resultsContainer}>
       <ResultBar pageInfo={pageInfo}/>
       {renderError()}
       {renderLoading()}

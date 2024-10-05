@@ -1,5 +1,4 @@
-import classes from "./Movies.module.css";
-import border from "../utils/css-utils.ts";
+import classes from "../css/MovieSearch.module.css";
 import Page from "../dtos/Page.ts";
 import Movie from "../dtos/Movie.ts";
 
@@ -18,7 +17,7 @@ export default function ResultCount(props: ResultCountProps) {
   }
 
   return (
-    <div className={classes.advancedSearch__resultCount + border()}>
+    <div className={classes.search__resultCount}>
       {renderResultCount()}
     </div>
   );
