@@ -20,7 +20,7 @@ public interface MovieRepository extends PagingAndSortingRepository<Movie, Strin
             (:minRuntime IS NULL AND m.RUNTIME <= :maxRuntime) OR
             (m.RUNTIME >= :minRuntime AND m.RUNTIME <= :maxRuntime)
         ) AND
-        (:genre IS NULL OR MATCH(m.GENRES) AGAINST(:genre IN NATURAL LANGUAGE MODE)) AND
+        (:genre IS NULL OR MATCH(m.GENRES) AGAINST(:genre IN BOOLEAN MODE)) AND
         (:year IS NULL OR m.START_YEAR = :year) AND
         (
             (:maxRating IS NULL AND :minRating IS NULL) OR

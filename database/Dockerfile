@@ -1,4 +1,4 @@
-FROM mysql:9 as builder
+FROM mysql:9 AS builder
 
 ENV MYSQL_DATABASE=IMDB
 ENV MYSQL_ROOT_PASSWORD=root
@@ -21,6 +21,6 @@ RUN ./start-sql-server.bash && \
 
 EXPOSE 3306
 
-FROM mysql:9 as final
+FROM mysql:9 AS final
 
 COPY --from=builder /var/lib/mysql /var/lib/mysql
