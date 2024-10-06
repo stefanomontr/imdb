@@ -4,6 +4,7 @@ export interface TextFieldProps {
   value: string | undefined;
   placeholder: string;
   setField: (text: string | undefined) => void;
+  dataTestId: string;
 }
 
 export default function TextField(props: TextFieldProps) {
@@ -25,6 +26,7 @@ export default function TextField(props: TextFieldProps) {
     <input
       type="text"
       ref={fieldRef}
+      data-testid={props.dataTestId}
       defaultValue={props.value}
       placeholder={props.placeholder}
       style={{width: '100%'}}

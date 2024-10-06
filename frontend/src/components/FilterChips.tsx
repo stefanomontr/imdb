@@ -2,6 +2,7 @@ import {Chip} from "@mui/material";
 import {useContext} from "react";
 import SearchContext from "./SearchContext.tsx";
 import classes from "../css/MovieSearch.module.css";
+import Constants from "../utils/constants.ts";
 
 export default function FilterChips() {
 
@@ -9,38 +10,38 @@ export default function FilterChips() {
 
   const searchFields = [
     {
-      fieldLabel: "Title",
+      fieldLabel: Constants.TITLE,
       value: searchCtx.searchCriteria.title,
       setField: searchCtx.setTitle
     },
     {
-      fieldLabel: "Runtime under",
+      fieldLabel: Constants.MAX_RUNTIME,
       value: searchCtx.searchCriteria.maxRuntime,
       setField: searchCtx.setMaxRuntime
     },
     {
-      fieldLabel: "Runtime over",
+      fieldLabel: Constants.MIN_RUNTIME,
       value: searchCtx.searchCriteria.minRuntime,
       setField: searchCtx.setMinRuntime
     },
     {
-      fieldLabel: "Genre",
+      fieldLabel: Constants.GENRE,
       value: searchCtx.searchCriteria.genre,
       setField: searchCtx.setGenre
 
     },
     {
-      fieldLabel: "Rating over",
+      fieldLabel: Constants.MIN_RATING,
       value: searchCtx.searchCriteria.minRating,
       setField: searchCtx.setMinRating
     },
     {
-      fieldLabel: "Rating under",
+      fieldLabel: Constants.MAX_RATING,
       value: searchCtx.searchCriteria.maxRating,
       setField: searchCtx.setMaxRating
     },
     {
-      fieldLabel: "Release year",
+      fieldLabel: Constants.YEAR,
       value: searchCtx.searchCriteria.year,
       setField: searchCtx.setYear
     }

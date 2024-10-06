@@ -4,6 +4,7 @@ export interface NumberFieldProps {
   max: number;
   placeholder: string;
   setField: (num: number | undefined) => void;
+  dataTestId: string;
 }
 
 export default function NumberField(props: NumberFieldProps) {
@@ -22,6 +23,7 @@ export default function NumberField(props: NumberFieldProps) {
   return (
     <input
       type="number"
+      data-testid={props.dataTestId}
       min={props.min}
       max={props.max}
       defaultValue={props.value}
