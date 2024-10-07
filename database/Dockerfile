@@ -30,3 +30,6 @@ HEALTHCHECK --interval=3s --timeout=20s --retries=10 CMD [ \
 ]
 
 EXPOSE 3306
+
+# Disable InnoDB native AIO
+CMD ["mysqld", "--innodb-use-native-aio=0"]

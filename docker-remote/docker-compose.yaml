@@ -2,6 +2,7 @@ services:
 
   mysql:
     image: stefanomontr/imdb-mysql:0.0.1
+    platform: linux/amd64
     environment:
       MYSQL_DATABASE: IMDB
       MYSQL_ROOT_PASSWORD: root
@@ -10,13 +11,15 @@ services:
 
   backend:
     image: stefanomontr/imdb-backend:0.0.1
+    platform: linux/amd64
     environment:
       MYSQL_HOST: mysql
       FRONTEND_HOST: http://localhost:3000
     ports:
       - "8080:8080"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
 
   frontend:
     image: stefanomontr/imdb-frontend:0.0.1
@@ -25,4 +28,5 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
