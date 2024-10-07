@@ -65,9 +65,8 @@ export default function FilterChips() {
       {searchFields.map(searchField => {
         const chipLabel = `${searchField.fieldLabel}: ${searchField.value}`;
         return (
-          <div className={classes.search__filterChip}>
+          <div key={chipLabel} className={classes.search__filterChip}>
             <Chip
-              key={chipLabel}
               label={chipLabel}
               onDelete={() => searchField.setField(undefined)}
             />

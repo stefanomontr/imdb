@@ -28,11 +28,11 @@ export default function SearchSorting() {
         key={searchCriteria.sortingField}
         defaultValue={searchCriteria.sortingField}
         onChange={onSortHandler}
-        data-testId={"search-sorting"}
+        data-test-id={"search-sorting"}
       >
         <option value={NO_SORTING}>{NO_SORTING}</option>
         <option value={"title"}>Title</option>
-        <option value={"runtimeMinutes"}>Runtime</option>
+        <option value={"runtime"}>Runtime</option>
         <option value={"year"}>Year</option>
         <option value={"rating"}>Rating</option>
       </select>

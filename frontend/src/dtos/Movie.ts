@@ -1,7 +1,7 @@
 export default interface Movie {
     id: string;
     title: string;
-    runtimeMinutes?: number;
+    runtime?: number;
     genres?: string;
     year?: number;
     rating?: number;

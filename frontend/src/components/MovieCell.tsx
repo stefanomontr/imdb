@@ -10,8 +10,8 @@ export interface MovieProps {
 
 export default function MovieCell(props: MovieProps) {
 
-  const hours = props.movie.runtimeMinutes && Math.floor(props.movie.runtimeMinutes / 60);
-  const minutes = props.movie.runtimeMinutes && props.movie.runtimeMinutes % 60;
+  const hours = props.movie.runtime && Math.floor(props.movie.runtime / 60);
+  const minutes = props.movie.runtime && props.movie.runtime % 60;
 
   return (
     <div className={classes.search__movie}>

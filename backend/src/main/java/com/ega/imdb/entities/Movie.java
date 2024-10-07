@@ -32,7 +32,7 @@ public class Movie {
     Integer year;
 
     @Column(name = "RUNTIME")
-    Integer runtimeMinutes;
+    Integer runtime;
 
     @Column(name = "RATING")
     Double rating;

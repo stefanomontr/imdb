@@ -8,7 +8,10 @@ export interface MovieListProps {
 export default function MovieList(props: MovieListProps) {
   return (
     <div>
-      {props.movies?.map(movie => <MovieCell key={movie.id} movie={movie}/>)}
+      {
+        props.movies.map((movie, idx) =>
+          <MovieCell key={`${movie.id}:${idx}`} movie={movie}/>)
+      }
     </div>
   );
 }

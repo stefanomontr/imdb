@@ -49,6 +49,11 @@ export default function SearchResults() {
   }
 
   const moviePages = (data?.pages || []);
+  const movieList = moviePages.reduce((movies, currPage) => [
+    ...movies,
+    ...currPage.content
+  ], [] as Movie[]);
+
   const lastPage = data?.pages[data.pages.length - 1];
   const pageInfo = extractPageInfo(lastPage);
 
@@ -62,10 +67,8 @@ export default function SearchResults() {
       <ResultBar pageInfo={pageInfo}/>
       {renderError()}
       {renderLoading()}
-      <MovieList movies={moviePages.reduce((movies, currPage) => [
-        ...movies,
-        ...currPage.content
-      ], [] as Movie[])} />
+      <MovieList
+        movies={movieList} />
       <LoadMore
         isFetchingNextPage={isFetchingNextPage}
         fetchNextPage={fetchNextPage}

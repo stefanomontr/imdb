@@ -26,7 +26,7 @@ export default function TextField(props: TextFieldProps) {
     <input
       type="text"
       ref={fieldRef}
-      data-testid={props.dataTestId}
+      data-test-id={props.dataTestId}
       defaultValue={props.value}
       placeholder={props.placeholder}
       style={{width: '100%'}}
