@@ -19,8 +19,14 @@ RUN ./start-sql-server.bash && \
     echo "Uploading ratings..." && \
     mysql -u root -proot IMDB < upload-ratings.sql
 
-EXPOSE 3306
-
 FROM mysql:9 AS final
 
+ENV MYSQL_ROOT_PASSWORD=root
+
 COPY --from=builder /var/lib/mysql /var/lib/mysql
+
+HEALTHCHECK --interval=3s --timeout=20s --retries=10 CMD [ \
+    "/usr/bin/mysql", "--user=root", "--password=root", "--execute", "SHOW DATABASES;" \
+]
+
+EXPOSE 3306

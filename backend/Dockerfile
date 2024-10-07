@@ -18,11 +18,14 @@ COPY .mvn/ .mvn/
 RUN chmod 777 start-test-sql-server.bash
 RUN ./start-test-sql-server.bash && ./mvnw clean install
 
-FROM openjdk:17-alpine AS final
+FROM openjdk:17 AS final
 
 WORKDIR /backend
 COPY --from=builder /backend/target/imdb-*.jar .
 
 EXPOSE 8080
+
+HEALTHCHECK --interval=3s --timeout=10s --retries=10 \
+    CMD curl --silent http://localhost:8080/actuator/health/readiness | grep -q "{\"status\":\"UP\"}" || exit 1
 
 CMD java -jar imdb-*.jar
