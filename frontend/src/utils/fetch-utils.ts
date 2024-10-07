@@ -2,8 +2,6 @@ import Page from "../dtos/Page.ts";
 import Movie from "../dtos/Movie.ts";
 import SearchCriteria from "../dtos/SearchCriteria.ts";
 
-const backendApi = import.meta.env.BACKEND_API;
-
 function returnResponseOrThrowErrorIfAny<T>(response: T) {
     // @ts-expect-error generic T type has no defined attributes
     if (response.error || response.message || response.ok === false) {
@@ -16,7 +14,6 @@ function returnResponseOrThrowErrorIfAny<T>(response: T) {
 }
 
 export async function fetchFromBackendApi<T>(url: string, options: RequestInit): Promise<T> {
-    console.log("backend API: ", backendApi);
     return fetch(`http://localhost:8080/${url}`, options)
         .then(resp => resp.json())
         .then(resp => returnResponseOrThrowErrorIfAny<T>(resp));
