@@ -23,7 +23,7 @@ export default function NumberField(props: NumberFieldProps) {
   return (
     <input
       type="number"
-      data-test-id={props.dataTestId}
+      data-testid={props.dataTestId}
       min={props.min}
       max={props.max}
       defaultValue={props.value}

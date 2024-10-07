@@ -35,7 +35,7 @@ export default function SearchResults() {
     initialPageParam: 0,
     queryKey: ["movies", searchCriteria],
     queryFn: ({ signal, pageParam }) => paginatedSearch({ signal, pageParam, searchCriteria}),
-    enabled: query => !query.isStale(),
+    // enabled: query => !query.isStale(),
     placeholderData: keepPreviousData
   });
 

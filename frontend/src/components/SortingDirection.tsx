@@ -16,7 +16,7 @@ export default function SortingDirection() {
   }
 
   return (
-    <div onClick={onChangeDirectionHandler} data-test-id={"search-sorting-direction"}>
+    <div onClick={onChangeDirectionHandler} data-testid={"search-sorting-direction"}>
       <svg
         className={
           searchCriteria.sortingField

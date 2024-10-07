@@ -28,7 +28,7 @@ export default function SearchSorting() {
         key={searchCriteria.sortingField}
         defaultValue={searchCriteria.sortingField}
         onChange={onSortHandler}
-        data-test-id={"search-sorting"}
+        data-testid={"search-sorting"}
       >
         <option value={NO_SORTING}>{NO_SORTING}</option>
         <option value={"title"}>Title</option>
