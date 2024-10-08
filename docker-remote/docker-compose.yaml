@@ -3,6 +3,10 @@ services:
   mysql:
     image: stefanomontr/imdb-mysql:0.0.2
     platform: linux/amd64
+    deploy:
+      resources:
+        limits:
+          memory: 6G
     environment:
       MYSQL_DATABASE: IMDB
       MYSQL_ROOT_PASSWORD: root
