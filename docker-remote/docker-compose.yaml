@@ -10,7 +10,7 @@ services:
       - "3306:3306"
 
   backend:
-    image: stefanomontr/imdb-backend:0.0.2
+    image: stefanomontr/imdb-backend:0.0.3
     platform: linux/amd64
     environment:
       MYSQL_HOST: mysql
@@ -22,12 +22,12 @@ services:
         condition: service_healthy
 
   frontend:
-    image: stefanomontr/imdb-frontend:0.0.2
+    image: stefanomontr/imdb-frontend:0.0.3
     platform: linux/amd64
     environment:
       BACKEND_API: http://backend:8080
     ports:
       - "3000:3000"
     depends_on:
-      backend:
+      mysql:
         condition: service_healthy
