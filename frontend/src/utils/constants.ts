@@ -16,6 +16,9 @@ class Constants {
   static YEAR_PLACEHOLDER = "YYYY";
   static MIN_RATING_PLACEHOLDER = "Set min average rating";
   static MAX_RATING_PLACEHOLDER = "Set max average rating";
+
+  static BROWSER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+    "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/112.0.0.0 Safari/537.36";
 }
 
 export default Constants;

@@ -25,6 +25,14 @@ services:
       mysql:
         condition: service_healthy
 
+  browserless-chrome:
+    image: browserless/chrome:latest
+    platform: linux/amd64
+    environment:
+      PORT: "4000"
+    ports:
+      - "4000:4000"
+
   frontend:
     image: stefanomontr/imdb-frontend:0.0.3
     platform: linux/amd64
@@ -33,5 +41,5 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      mysql:
-        condition: service_healthy
+      - backend
+      - browserless-chrome

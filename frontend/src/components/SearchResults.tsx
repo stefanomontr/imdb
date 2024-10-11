@@ -67,8 +67,7 @@ export default function SearchResults() {
       <ResultBar pageInfo={pageInfo}/>
       {renderError()}
       {renderLoading()}
-      <MovieList
-        movies={movieList} />
+      <MovieList movies={movieList} />
       <LoadMore
         isFetchingNextPage={isFetchingNextPage}
         fetchNextPage={fetchNextPage}

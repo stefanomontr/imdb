@@ -1,8 +1,8 @@
 import Movie from "../dtos/Movie.ts";
 import classes from "../css/MovieSearch.module.css";
-import poster from "./../assets/sample-poster.jpg";
 import ReviewStar from "./ReviewStar.tsx";
 import {formatNumVotes} from "../utils/math-utils.ts";
+import MoviePoster from "./MoviePoster.tsx";
 
 export interface MovieProps {
   movie: Movie
@@ -12,17 +12,18 @@ export default function MovieCell(props: MovieProps) {
 
   const hours = props.movie.runtime && Math.floor(props.movie.runtime / 60);
   const minutes = props.movie.runtime && props.movie.runtime % 60;
+  const imbdUrl  = `https://www.imdb.com/title/${props.movie.id}/?ref_=sr_t_1`;
 
   return (
     <div className={classes.search__movie}>
       <div className={`${classes.search__moviePoster}`}>
-        <img src={poster} style={{width: "50px"}}/>
+        <MoviePoster imdbUrl={imbdUrl} movieTitle={props.movie.title}/>
       </div>
       <div className={`${classes.search__movieInfo}`}>
         <div>
           <a
             className={classes.search__movieTitle}
-            href={`https://www.imdb.com/title/${props.movie.id}/?ref_=sr_t_1`}
+            href={imbdUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
