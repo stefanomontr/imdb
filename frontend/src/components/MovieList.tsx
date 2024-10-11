@@ -1,4 +1,4 @@
-import MovieCell from "./MovieCell.tsx";
+import MovieItem from "./MovieItem.tsx";
 import Movie from "../dtos/Movie.ts";
 
 export interface MovieListProps {
@@ -10,7 +10,7 @@ export default function MovieList(props: MovieListProps) {
     <div>
       {
         props.movies.map((movie, idx) =>
-          <MovieCell key={`${movie.id}:${idx}`} movie={movie}/>)
+          <MovieItem key={`${movie.id}:${idx}`} movie={movie}/>)
       }
     </div>
   );

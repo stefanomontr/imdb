@@ -31,7 +31,7 @@
 }
 
 .search__movie-poster,
-.search__movie-info {
+.search__movie-specs {
     display: inline-block;
     vertical-align: middle;
     padding: 8px;
@@ -63,7 +63,7 @@
     display: block;
 }
 
-.search__movie-info {
+.search__movie-specs {
     display: flex;
     flex-grow: 1;
     flex-direction: column;
