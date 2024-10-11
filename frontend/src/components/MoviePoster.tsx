@@ -3,6 +3,7 @@ import {useEffect, useRef, useState} from "react";
 import Constants from "../utils/constants.ts";
 import image from "../assets/image-placeholder.png";
 import {Page} from "puppeteer-core/lib/esm/puppeteer/api/Page.d.ts";
+import classes from "../css/MovieSearch.module.css";
 
 export interface MoviePosterProps {
   movieTitle: string;
@@ -40,9 +41,13 @@ export default function MoviePoster(props: MoviePosterProps) {
     });
   };
 
-  return <img
-    src={moviePosterSrc || image}
-    style={{width: "50px", height: "74px"}}
-    alt={`Movie poster of ${props.movieTitle}`}
-  />;
+  return (
+    <div className={classes.search__moviePoster}>
+      <img
+        src={moviePosterSrc || image}
+        style={{width: "50px", height: "74px"}}
+        alt={`Movie poster of ${props.movieTitle}`}
+      />
+    </div>
+  );
 }

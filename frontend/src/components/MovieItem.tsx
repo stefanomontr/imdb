@@ -14,9 +14,7 @@ export default function MovieItem(props: MovieProps) {
 
   return (
     <div className={classes.search__movie}>
-      <div className={classes.search__moviePoster}>
-        <MoviePoster imdbUrl={imdbUrl} movieTitle={props.movie.title}/>
-      </div>
+      <MoviePoster imdbUrl={imdbUrl} movieTitle={props.movie.title}/>
       <div className={classes.search__movieSpecs}>
         <MovieTitle
           imdbUrl={imdbUrl}
