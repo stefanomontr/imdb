@@ -32,9 +32,12 @@ services:
       PORT: "4000"
     ports:
       - "4000:4000"
+    depends_on:
+      mysql:
+        condition: service_healthy
 
   frontend:
-    image: stefanomontr/imdb-frontend:0.0.3
+    image: stefanomontr/imdb-frontend:0.0.4
     platform: linux/amd64
     environment:
       BACKEND_API: http://backend:8080
