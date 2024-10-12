@@ -20,6 +20,26 @@ export default function SearchFilters() {
           setField={searchCtx.setTitle}
         />
       </SearchFilter>
+      <SearchFilter fieldTitle={Constants.GENRE}>
+        <TextField
+          key={searchCtx.searchCriteria.genre}
+          dataTestId={"search-filter-genre"}
+          value={searchCtx.searchCriteria.genre}
+          placeholder={Constants.GENRE_PLACEHOLDER}
+          setField={searchCtx.setGenre}
+        />
+      </SearchFilter>
+      <SearchFilter fieldTitle={Constants.YEAR}>
+        <NumberField
+          key={searchCtx.searchCriteria.year}
+          dataTestId={"search-filter-year"}
+          value={searchCtx.searchCriteria.year}
+          min={1800}
+          max={2500}
+          placeholder={Constants.YEAR_PLACEHOLDER}
+          setField={searchCtx.setYear}
+        />
+      </SearchFilter>
       <SearchFilter fieldTitle={Constants.RUNTIME}>
         <span>From</span>
         <NumberField
@@ -40,26 +60,6 @@ export default function SearchFilters() {
           max={1000}
           placeholder={Constants.MAX_RUNTIME_PLACEHOLDER}
           setField={searchCtx.setMaxRuntime}
-        />
-      </SearchFilter>
-      <SearchFilter fieldTitle={Constants.GENRE}>
-        <TextField
-          key={searchCtx.searchCriteria.genre}
-          dataTestId={"search-filter-genre"}
-          value={searchCtx.searchCriteria.genre}
-          placeholder={Constants.GENRE_PLACEHOLDER}
-          setField={searchCtx.setGenre}
-        />
-      </SearchFilter>
-      <SearchFilter fieldTitle={Constants.YEAR}>
-        <NumberField
-          key={searchCtx.searchCriteria.year}
-          dataTestId={"search-filter-year"}
-          value={searchCtx.searchCriteria.year}
-          min={1800}
-          max={2500}
-          placeholder={Constants.YEAR_PLACEHOLDER}
-          setField={searchCtx.setYear}
         />
       </SearchFilter>
       <SearchFilter fieldTitle={Constants.RATING}>

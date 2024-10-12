@@ -67,12 +67,14 @@ export default function SearchResults() {
       <ResultBar pageInfo={pageInfo}/>
       {renderError()}
       {renderLoading()}
-      <MovieList movies={movieList} />
-      <LoadMore
-        isFetchingNextPage={isFetchingNextPage}
-        fetchNextPage={fetchNextPage}
-        hasNextPage={hasNextPage}
-      />
+      <div className={classes.search__results}>
+        <MovieList movies={movieList} />
+        <LoadMore
+          isFetchingNextPage={isFetchingNextPage}
+          fetchNextPage={fetchNextPage}
+          hasNextPage={hasNextPage}
+        />
+      </div>
     </div>
   );
 }

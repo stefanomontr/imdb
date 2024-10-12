@@ -38,13 +38,21 @@
 }
 
 .search__movie-title {
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 480px;
+}
+
+.search__movie-title-link {
     text-decoration: none;
     color: inherit;
     font-weight: bold;
 }
 
-.search__movie-title:hover,
-.search__movie-title:active {
+.search__movie-title-link:hover,
+.search__movie-title-link:active {
     color: #57c2f8;
 }
 
@@ -171,4 +179,63 @@
 .search__load-more:active {
     background-color: rgba(182, 229, 255, 0.5);
     color: #57c2f8;
+}
+
+@media (max-width: 1024px) {
+
+    .search__title {
+        font-size: 2rem;
+    }
+
+    .search {
+        max-width: 800px;
+    }
+
+    .search__container {
+        display: block;
+    }
+
+    .search__filters {
+        width: 100%;
+        position: static;
+    }
+
+    .search__results-container {
+        width: 100%;
+    }
+
+    .search__result-bar {
+        margin: 10px auto;
+    }
+
+    .search__movie-title {
+        max-width: 660px;
+    }
+
+    .search__movie-year {
+        width: 9%;
+    }
+
+    .search__movie-runtime {
+        width: 9%;
+    }
+
+    .search__results {
+        height: 640px;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .search__filters input {
+        display: inline-block;
+        margin: 0 16px;
+    }
+
+    .search__filters input[type="text"] {
+        width: 70% !important;
+    }
+
+    .search__filters input[type="number"] {
+        width: 30% !important;
+    }
 }

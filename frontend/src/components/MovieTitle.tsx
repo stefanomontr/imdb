@@ -7,18 +7,14 @@ export interface MovieTitleProps {
 
 export default function MovieTitle(props: MovieTitleProps) {
   return (
-    <div>
+    <div className={classes.search__movieTitle}>
       <a
-        className={classes.search__movieTitle}
+        className={classes.search__movieTitleLink}
         href={props.imdbUrl}
         target="_blank"
         rel="noopener noreferrer"
       >
-        {
-          props.movieTitle.length <= 60
-            ? props.movieTitle
-            : `${props.movieTitle.substring(0, 60)}...`
-        }
+        {props.movieTitle}
       </a>
     </div>
   );
