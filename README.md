@@ -1,8 +1,12 @@
 # README
 
-You can read this file skipping the two "technical" sections, if you don’t want to read about implementation details.
-Those sections are not needed at all if you just want to try and test the app in your browser!
+This is my solution to a technical test focusing on building a UI in short time.
+Hence, the most important part of the application is the frontend.
 
+You can read this file skipping the two "technical" sections, if you don’t want to read about implementation details.
+Those sections are not needed at all if you just want to try and test the app in your browser.
+
+- [Challenge Definition](#challenge-definition)
 - [Requirements](#requirements)
 - [General Architecture (Technical)](#general-architecture-technical)
 - [Getting Started](#getting-started)
@@ -11,6 +15,41 @@ Those sections are not needed at all if you just want to try and test the app in
 - [Stop and Delete the Application](#stop-and-delete-the-application)
 - [Source Code (Technical)](#source-code-technical)
 
+
+## CHALLENGE DEFINITION
+
+IMDb provides tab-separated files with movie listings. 
+The application will have to fulfill the following functional requirements.
+
+1) For each movie, show:
+
+   - Title
+   - Genre
+   - Year
+   - Rating
+   - Runtime (i.e. duration)
+   - A small icon of the poster
+   - A link to the IMDb page of that movie
+
+
+2) The user can sort movies by:
+
+   - Title
+   - Year
+   - Runtime
+   - Rating
+
+
+3) The user can filter movies by:
+
+   - Title
+   - Genre
+   - Year
+   - Rating
+   - Runtime (i.e. duration)
+
+The data files can be downloaded from [IMDb datasets](https://datasets.imdbws.com/). 
+Their description is [here](https://www.imdb.com/interfaces/). Pick the relevant ones.
 
 ## REQUIREMENTS
 
