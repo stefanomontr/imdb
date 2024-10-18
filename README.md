@@ -8,11 +8,13 @@ Those sections are not needed at all if you just want to try and test the app in
 
 - [Challenge Definition](#challenge-definition)
 - [Requirements](#requirements)
-- [General Architecture (Technical)](#general-architecture-technical)
-- [Getting Started](#getting-started)
+- [Architecture (Technical)](#architecture-technical)
 - [Premise (Technical)](#premise-technical)
-- [Test the Application](#test-the-application)
-- [Stop and Delete the Application](#stop-and-delete-the-application)
+- [Startup](#startup)
+- [Functionality](#functionality)
+- [Movie Posters](#movie-posters)
+- [Responsive Design](#responsive-design)
+- [Shutdown](#shutdown)
 - [Source Code (Technical)](#source-code-technical)
 
 
@@ -56,23 +58,32 @@ Their description is [here](https://www.imdb.com/interfaces/). Pick the relevant
 The application has been tested on Linux, Windows, and Mac, so there should be no specific OS required.
 
 Since it's resource intensive, you will need at least **15GB of free memory** (actually less, but it's an approximation).
-For instructions on how to delete the application data after usage, look up [Stop and Delete the Application](#stop-and-delete-the-application).
+For instructions on how to delete the application data after usage, look up the [Shutdown](#shutdown) section.
 
 Your **3306, 8080 and 3000 ports** should be **free**.
 
 The browser should be irrelevant, but so far I've only tested the application on Chrome and Firefox.
  
 
-## GENERAL ARCHITECTURE (TECHNICAL)
+## ARCHITECTURE (TECHNICAL)
 
 My solution to the problem of showing a large amount of data (more than 11 million of movies) was to parse the TSV files and ingest them into a **MySQL** database.
 
 The database is queried by a **SpringBoot** backend application.
 
 The backend then serves data to a Vite **React** single-page application. The frontend is written in TypeScript.
- 
 
-## GETTING STARTED
+
+## PREMISE (TECHNICAL)
+
+If you start the application following the [Startup](#startup) instructions, please be aware that the app will show the IMDb data of October the 1st, 2024.
+Since [IMDb datasets](https://datasets.imdbws.com/) are updated on a daily basis, there might be some (minor) differences between the current files and the ones I used to build the application.
+You can download the files I used &mdash; `title.basics.tsv` and `title.ratings.tsv` &mdash; from [here](https://drive.google.com/file/d/1-QUmR83BlG-ZXXnFMrudN_8DccUjaI2i/view).
+
+If you want to check the status of the MySQL db while the application is runnning, you can establish a connection to http://localhost:3306 with `user=root` and `password=root`.
+
+
+## STARTUP
 
 The application is started by the [docker-compose.yaml](docker-remote/docker-compose.yaml) file. You can download the file and put it in an empty folder, then access that folder in your command line and run
 
@@ -94,16 +105,7 @@ Completed initialization in ... ms
 Once the logs appear, you can connect to http://localhost:3000/ from your browser and visit the application.
 
 
-## PREMISE (TECHNICAL)
-
-If you start the application following the [Getting Started](#getting-started) instructions, please be aware that the app will show the IMDb data of October the 1st, 2024. 
-Since [IMDb datasets](https://datasets.imdbws.com/) are updated on a daily basis, there might be some (minor) differences between the current files and the ones I used to build the application.
-You can download the files I used &mdash; `title.basics.tsv` and `title.ratings.tsv` &mdash; from [here](https://drive.google.com/file/d/1-QUmR83BlG-ZXXnFMrudN_8DccUjaI2i/view). 
-
-If you want to check the status of the MySQL db while the application is runnning, you can establish a connection to http://localhost:3306 with `user=root` and `password=root`.
-
-
-## TEST THE APPLICATION
+## FUNCTIONALITY
 
 Once you land on the application on a desktop device, after the first data fetching, the app should look like this
 
@@ -150,7 +152,44 @@ Finally, if you hover over the movie title, it will be highlighted. If you click
 ![alt text](/screenshots/imdb-link.png)
 
 
-## STOP AND DELETE THE APPLICATION
+## MOVIE POSTERS
+Movie posters are retrieved through web scraping. The IMDb page of the movie is scraped to get the image url.
+Since the call is asynchronous, results will initially be rendered with a placeholder image, which will be later replaced by the movie poster.
+
+Before retrieving the images:
+
+![alt text](/screenshots/posters-before.png)
+
+After retrieving the images (as you can see, the placeholder image will be kept for those movies for which IMDb
+provides no poster at all. F.ex. the one in the screenshot, [Who's He Anyway](https://www.imdb.com/title/tt0448176/?ref_=sr_t_1)):
+
+![alt text](/screenshots/posters-after.png)
+
+
+## RESPONSIVE DESIGN
+
+For smaller screens, i.e. under 1024 pixels of width, the app design changes.
+
+Search filters appear on top of the list of results.
+
+![alt text](/screenshots/tablet-first-rendering.png)
+
+If you expand the search filters, you will notice that the inputs do not take the full width of their parent container, unlike in the computer version.
+
+![alt text](/screenshots/tablet-filters.png)
+
+Moreover, you can see 2 additional differences from the computer version:
+
+1) Search filters are static and do not follow the viewport (i.e. they are left outside the window upper boundary as you scroll down).
+This decision was due to the fact that, if filters had followed the viewport, they would have covered the underlying search results.
+
+2) Results can now be scrolled without scrolling the overall page at the same time. Indeed, the height of the results container is fixed.
+This is useful because, since filters are fixed at the top of the page, they can be reached quickly even when loading several results.
+
+![alt text](/screenshots/tablet-responsive-design.gif)
+
+
+## SHUTDOWN
 
 Once you're done with testing, you can shut down the application by hitting `CTRL+C` in the command line where you started it. After that, don't forget to also submit the following command
 ```
